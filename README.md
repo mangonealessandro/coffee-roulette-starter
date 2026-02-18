@@ -67,7 +67,7 @@ You will be asked to log in with your Anthropic account or provide an API key.
 
 ```bash
 git clone <repository-url>
-cd innovation-highway-course
+cd coffee-roulette-starter
 ```
 
 ### 5. Set up the project
