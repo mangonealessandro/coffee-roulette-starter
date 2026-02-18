@@ -1,5 +1,5 @@
 ---
-name: generate-from-gh-issue
+name: generate-prp-from-gh-issue
 description: Generate a comprehensive PRP for a new feature implementation based on a provided GitHub issue. The PRP should include detailed research, implementation blueprint, and validation gates to ensure a successful one-pass implementation.
 disable-model-invocation: true
 ---
