@@ -2,20 +2,20 @@
 
 ## Overview
 
-Frontend web application per gestire match casuali tra colleghi per pause caffè.
-Permette login, visualizzazione match settimanali/on-demand, e richiesta caffè in tempo reale.
+Frontend web application to manage random coffee matches between colleagues.
+Allows login, viewing weekly/on-demand matches, and requesting coffee in real-time.
 
-**Problema risolto:** Interfaccia user-friendly per favorire connessioni spontanee tra colleghi remoti/ibridi.
+**Problem solved:** User-friendly interface to foster spontaneous connections between remote/hybrid colleagues.
 
 ## Stack
 
-| Tech         | Version | Note                                                                 |
+| Tech         | Version | Notes                                                                |
 | ------------ | ------- | -------------------------------------------------------------------- |
-| Next.js      | 14+     | App Router (non Pages Router), scelto per SSR e file-based routing   |
-| React        | 18+     | Server Components by default, Client Components solo dove necessario |
-| Tailwind CSS | 3+      | Utility-first CSS, configurato per design system aziendale           |
-| shadcn/ui    | Latest  | Componenti headless + Radix UI, personalizzabili al 100%             |
-| TypeScript   | 5+      | Strict mode abilitato per type safety massima                        |
+| Next.js      | 14+     | App Router (not Pages Router), chosen for SSR and file-based routing |
+| React        | 18+     | Server Components by default, Client Components only where necessary |
+| Tailwind CSS | 3+      | Utility-first CSS, configured for company design system              |
+| shadcn/ui    | Latest  | Headless components + Radix UI, 100% customizable                    |
+| TypeScript   | 5+      | Strict mode enabled for maximum type safety                          |
 
 ## Getting Started
 
@@ -23,40 +23,40 @@ Permette login, visualizzazione match settimanali/on-demand, e richiesta caffè 
 
 - Node.js 18+
 - npm 9+
-- Backend API running su `http://localhost:3001` (vedi `api/claude.md`)
+- Backend API running on `http://localhost:3001` (see `api/claude.md`)
 
 ### Setup
 
 ```bash
-# Installa dipendenze
+# Install dependencies
 npm install
 
-# Copia env vars
+# Copy env vars
 cp .env.example .env.local
-# Edita NEXT_PUBLIC_API_URL se API non è su localhost:3001
+# Edit NEXT_PUBLIC_API_URL if API is not on localhost:3001
 
-# Installa componenti shadcn base
+# Install shadcn base components
 npx shadcn-ui@latest init
 
-# Avvia dev server
-npm run dev  # Porta 3000, hot reload abilitato
+# Start dev server
+npm run dev  # Port 3000, hot reload enabled
 ```
 
 ### Running
 
 ```bash
-npm run dev          # Dev server con hot reload (porta 3000)
-npm run build        # Build ottimizzato per produzione
-npm run start        # Serve build di produzione
+npm run dev          # Dev server with hot reload (port 3000)
+npm run build        # Optimized production build
+npm run start        # Serve production build
 npm run lint         # ESLint + type checking
-npm run lint:fix     # Auto-fix problemi linting
-npx shadcn-ui add [component]  # Aggiungi componenti shadcn
+npm run lint:fix     # Auto-fix linting issues
+npx shadcn-ui add [component]  # Add shadcn components
 ```
 
-**Env vars necessarie:**
+**Required Env vars:**
 
-- `NEXT_PUBLIC_API_URL` - Base URL del backend API (default: `http://localhost:3001/api`)
-- `NEXT_PUBLIC_APP_NAME` - Nome app per meta tags (default: `Coffee Roulette`)
+- `NEXT_PUBLIC_API_URL` - Backend API Base URL (default: `http://localhost:3001/api`)
+- `NEXT_PUBLIC_APP_NAME` - App name for meta tags (default: `Coffee Roulette`)
 
 ## Architecture
 
@@ -64,17 +64,17 @@ npx shadcn-ui add [component]  # Aggiungi componenti shadcn
 web/
 ├── src/
 │   ├── app/                    # Next.js 14 App Router
-│   │   ├── (auth)/             # Route group: autenticazione (no layout dashboard)
+│   │   ├── (auth)/             # Route group: authentication (no dashboard layout)
 │   │   │   ├── login/
-│   │   │   │   └── page.tsx    # Form login
+│   │   │   │   └── page.tsx    # Login form
 │   │   │   └── register/
-│   │   │       └── page.tsx    # Form registrazione
-│   │   ├── (dashboard)/        # Route group: area protetta (con sidebar)
-│   │   │   ├── layout.tsx      # Layout con sidebar + auth check
+│   │   │       └── page.tsx    # Registration form
+│   │   ├── (dashboard)/        # Route group: protected area (with sidebar)
+│   │   │   ├── layout.tsx      # Layout with sidebar + auth check
 │   │   │   ├── matches/
-│   │   │   │   └── page.tsx    # Lista match
+│   │   │   │   └── page.tsx    # Match list
 │   │   │   └── profile/
-│   │   │       └── page.tsx    # Profilo utente
+│   │   │       └── page.tsx    # User profile
 │   │   ├── layout.tsx          # Root layout (providers, fonts)
 │   │   ├── page.tsx            # Landing page / redirect logic
 │   │   └── globals.css         # Tailwind imports + custom CSS vars
@@ -89,15 +89,15 @@ web/
 │   │       ├── UserAvatar.tsx
 │   │       └── AvailabilityToggle.tsx
 │   ├── lib/
-│   │   ├── api.ts              # API client con fetch wrapper + error handling
+│   │   ├── api.ts              # API client with fetch wrapper + error handling
 │   │   ├── auth.ts             # JWT token management + refresh logic
 │   │   └── utils.ts            # Helper functions (cn, formatDate, etc)
 │   ├── hooks/
-│   │   ├── useAuth.ts          # Hook per login/logout/user state
-│   │   ├── useMatches.ts       # Hook per fetch/update matches
+│   │   ├── useAuth.ts          # Hook for login/logout/user state
+│   │   ├── useMatches.ts       # Hook for fetch/update matches
 │   │   └── useToast.ts         # shadcn toast wrapper
 │   └── types/
-│       ├── api.ts              # Response types dal backend
+│       ├── api.ts              # Response types from backend
 │       └── index.ts            # Shared types (User, Match, etc)
 ├── public/
 │   ├── avatars/                # Avatar placeholder images
@@ -105,54 +105,54 @@ web/
 └── tailwind.config.ts          # Tailwind + shadcn theme config
 ```
 
-**Pattern architetturale:** Feature-based structure con separazione UI/Logic
+**Architectural Pattern:** Feature-based structure with UI/Logic separation
 
 **Data flow:**
 
-1. Page (Server Component) → pre-fetch data se possibile
+1. Page (Server Component) → pre-fetch data if possible
 2. Client Component → useHook → API client → Backend
-3. API client → gestisce errors + refresh token → ritorna data
-4. Hook → aggiorna state → UI re-render
+3. API client → handles errors + refresh token → returns data
+4. Hook → updates state → UI re-render
 
 ## Pages & Routes
 
-| Route       | Type               | Descrizione                        | Auth Required |
-| ----------- | ------------------ | ---------------------------------- | ------------- |
-| `/`         | Server Component   | Landing page con redirect logic    | No            |
-| `/login`    | Client Component   | Form login con validazione         | No            |
-| `/register` | Client Component   | Form registrazione                 | No            |
-| `/matches`  | Server Component\* | Lista match (pending + completati) | Sì            |
-| `/profile`  | Client Component   | Profilo + toggle disponibilità     | Sì            |
+| Route       | Type               | Description                      | Auth Required |
+| ----------- | ------------------ | -------------------------------- | ------------- |
+| `/`         | Server Component   | Landing page with redirect logic | No            |
+| `/login`    | Client Component   | Login form with validation       | No            |
+| `/register` | Client Component   | Registration form                | No            |
+| `/matches`  | Server Component\* | Match list (pending + completed) | Yes           |
+| `/profile`  | Client Component   | Profile + availability toggle    | Yes           |
 
-\*Server Component con Client Components annidati per interattività
+\*Server Component with nested Client Components for interactivity
 
 **Auth flow:**
 
-- Routes in `(auth)` → accessibili solo se non loggato (redirect a `/matches` se loggato)
-- Routes in `(dashboard)` → protected, redirect a `/login` se non autenticato
-- Auth check in `(dashboard)/layout.tsx` via middleware o server-side check
+- Routes in `(auth)` → accessible only if not logged in (redirect to `/matches` if logged in)
+- Routes in `(dashboard)` → protected, redirect to `/login` if not authenticated
+- Auth check in `(dashboard)/layout.tsx` via middleware or server-side check
 
 ## Key Components
 
 ### Features Components
 
-| Component            | Path                                     | Descrizione                                               |
-| -------------------- | ---------------------------------------- | --------------------------------------------------------- |
-| `CoffeeButton`       | `components/features/CoffeeButton`       | CTA "Voglio un caffè!" → POST `/matches/on-demand`        |
-| `MatchCard`          | `components/features/MatchCard`          | Card match con avatar, nome, data, actions                |
-| `AvailabilityToggle` | `components/features/AvailabilityToggle` | Switch per disponibilità → PATCH `/users/me/availability` |
-| `UserAvatar`         | `components/features/UserAvatar`         | Avatar con fallback iniziali nome                         |
-| `MatchList`          | `components/features/MatchList`          | Container lista match con filter pending/completed        |
+| Component            | Path                                     | Description                                              |
+| -------------------- | ---------------------------------------- | -------------------------------------------------------- |
+| `CoffeeButton`       | `components/features/CoffeeButton`       | CTA "I want a coffee!" → POST `/matches/on-demand`       |
+| `MatchCard`          | `components/features/MatchCard`          | Match card with avatar, name, date, actions              |
+| `AvailabilityToggle` | `components/features/AvailabilityToggle` | Switch for availability → PATCH `/users/me/availability` |
+| `UserAvatar`         | `components/features/UserAvatar`         | Avatar with name initials fallback                       |
+| `MatchList`          | `components/features/MatchList`          | Match list container with pending/completed filter       |
 
-### shadcn UI Components (già installati)
+### shadcn UI Components (already installed)
 
 - `Button` - Variants: default, outline, ghost, destructive
-- `Card` - Con CardHeader, CardContent, CardFooter
-- `Avatar` - Con AvatarImage, AvatarFallback
-- `Badge` - Per status match (pending, completed, skipped)
+- `Card` - With CardHeader, CardContent, CardFooter
+- `Avatar` - With AvatarImage, AvatarFallback
+- `Badge` - For match status (pending, completed, skipped)
 - `Input`, `Label` - Form controls
-- `Switch` - Toggle disponibilità
-- `Toast` - Notifiche real-time (nuovo match, errori)
+- `Switch` - Availability toggle
+- `Toast` - Real-time notifications (new match, errors)
 - `Skeleton` - Loading states
 
 ## API Integration
@@ -176,7 +176,7 @@ export async function apiClient<T>(
   endpoint: string,
   options?: RequestInit,
 ): Promise<T> {
-  const token = getAccessToken(); // Da lib/auth.ts
+  const token = getAccessToken(); // From lib/auth.ts
 
   const res = await fetch(`${API_BASE}${endpoint}`, {
     ...options,
@@ -191,10 +191,10 @@ export async function apiClient<T>(
   if (res.status === 401) {
     const refreshed = await refreshAccessToken();
     if (refreshed) {
-      // Retry request con nuovo token
+      // Retry request with new token
       return apiClient<T>(endpoint, options);
     }
-    // Refresh fallito → redirect a login
+    // Refresh failed → redirect to login
     window.location.href = "/login";
     throw new ApiError(401, "Session expired");
   }
@@ -215,7 +215,7 @@ export async function apiClient<T>(
 const ACCESS_TOKEN_KEY = "access_token";
 const REFRESH_TOKEN_KEY = "refresh_token";
 
-// ⚠️ Per prod: usa httpOnly cookies invece di localStorage
+// ⚠️ For prod: use httpOnly cookies instead of localStorage
 export function getAccessToken(): string | null {
   if (typeof window === "undefined") return null;
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -252,33 +252,33 @@ export async function refreshAccessToken(): Promise<boolean> {
 
 ### File & Component Naming
 
-- **Components:** PascalCase file e nome → `MatchCard.tsx`, `export function MatchCard()`
-- **Hooks:** camelCase con `use` prefix → `useAuth.ts`, `export function useAuth()`
+- **Components:** PascalCase file and name → `MatchCard.tsx`, `export function MatchCard()`
+- **Hooks:** camelCase with `use` prefix → `useAuth.ts`, `export function useAuth()`
 - **Utils:** camelCase → `formatDate.ts`, `export function formatDate()`
 - **Types:** PascalCase interfaces → `export interface Match { ... }`
 - **Pages:** kebab-case folders → `app/profile/page.tsx`
 
 ### React Best Practices
 
-- **Server Components by default:** Solo "use client" quando hai interattività (onClick, useState, useEffect)
-- **Props types:** Inline per componenti semplici (<3 props), interface per complessi
-- **Async Server Components:** Fetch data direttamente nei page.tsx quando possibile
-- **Error boundaries:** Usa `error.tsx` in ogni route folder per gestione errori
-- **Loading states:** Usa `loading.tsx` per suspense boundaries automatici
+- **Server Components by default:** Only "use client" when you have interactivity (onClick, useState, useEffect)
+- **Props types:** Inline for simple components (<3 props), interface for complex ones
+- **Async Server Components:** Fetch data directly in page.tsx when possible
+- **Error boundaries:** Use `error.tsx` in every route folder for error handling
+- **Loading states:** Use `loading.tsx` for automatic suspense boundaries
 
 ### TypeScript
 
-- **Strict mode:** Sempre abilitato, no `any` type
-- **Infer types:** Preferisci type inference dove chiaro
-- **API types:** Mantieni allineati con backend DTOs (considera shared types package)
-- **Generic components:** Usa generics per componenti riusabili (es: `Table<T>`)
+- **Strict mode:** Always enabled, no `any` type
+- **Infer types:** Prefer type inference where clear
+- **API types:** Keep aligned with backend DTOs (consider shared types package)
+- **Generic components:** Use generics for reusable components (e.g., `Table<T>`)
 
 ### Styling
 
 - **Tailwind only:** No CSS modules, no styled-components
-- **Custom classes:** In `globals.css` solo per design tokens (colors, spacing)
-- **Responsive:** Mobile-first, usa breakpoints Tailwind (`sm:`, `md:`, `lg:`)
-- **Dark mode:** Preparato con `dark:` classes, toggle in futuro
+- **Custom classes:** In `globals.css` only for design tokens (colors, spacing)
+- **Responsive:** Mobile-first, use Tailwind breakpoints (`sm:`, `md:`, `lg:`)
+- **Dark mode:** Prepared with `dark:` classes, toggle in future
 
 ## Component Examples
 
@@ -327,13 +327,13 @@ export function MatchCard({ match, onComplete, onSkip }: MatchCardProps) {
             onClick={() => onComplete(match.id)}
             className="flex-1"
           >
-            ☕ Caffè fatto!
+            ☕ Coffee done!
           </Button>
           <Button
             variant="outline"
             onClick={() => onSkip(match.id)}
           >
-            Salta
+            Skip
           </Button>
         </CardFooter>
       )}
@@ -377,7 +377,7 @@ export function useMatches() {
 
   async function completeMatch(id: number) {
     await apiClient(`/matches/${id}/complete`, { method: "PATCH" });
-    await fetchMatches(); // Refresh lista
+    await fetchMatches(); // Refresh list
   }
 
   async function requestOnDemand() {
@@ -401,60 +401,60 @@ export function useMatches() {
 
 ## Boundaries
 
-### ✅ Always (fai autonomamente)
+### ✅ Always (do autonomously)
 
-- Usare TypeScript strict mode, no `any`
-- Componenti shadcn per UI standard (Button, Card, Input, etc)
-- Tailwind classes per styling (no CSS inline, no styled-components)
-- Error handling con try/catch e toast notifications
-- Loading states con Skeleton o Spinner
-- Responsive design mobile-first
+- Use TypeScript strict mode, no `any`
+- shadcn components for standard UI (Button, Card, Input, etc)
+- Tailwind classes for styling (no inline CSS, no styled-components)
+- Error handling with try/catch and toast notifications
+- Loading states with Skeleton or Spinner
+- Mobile-first responsive design
 
-### ⚠️ Ask First (discuti con team)
+### ⚠️ Ask First (discuss with team)
 
-- Aggiungere nuove dipendenze npm (valuta bundle size)
-- Modificare `tailwind.config.ts` (colori, spacing custom)
-- Cambiare strategia auth (localStorage → httpOnly cookies)
-- Aggiungere route esterne al (auth)/(dashboard) pattern
-- Integrare librerie di state management (Zustand, Redux)
+- Add new npm dependencies (evaluate bundle size)
+- Modify `tailwind.config.ts` (custom colors, spacing)
+- Change auth strategy (localStorage → httpOnly cookies)
+- Add routes outside the (auth)/(dashboard) pattern
+- Integrate state management libraries (Zustand, Redux)
 
-### 🚫 Never (vietato)
+### 🚫 Never (forbidden)
 
-- CSS inline o styled-components (usa solo Tailwind)
-- `any` type in TypeScript (usa `unknown` se necessario)
-- Token JWT in localStorage in produzione (migra a httpOnly cookies)
-- Fetch diretto senza `apiClient` wrapper (salta error handling)
-- Hardcoded API URL nel codice (usa `NEXT_PUBLIC_API_URL`)
-- Componenti Client quando Server Component è sufficiente
-- Import da `components/ui/` per modificare (copia e personalizza invece)
+- Inline CSS or styled-components (use only Tailwind)
+- `any` type in TypeScript (use `unknown` if necessary)
+- JWT tokens in localStorage in production (migrate to httpOnly cookies)
+- Direct fetch without `apiClient` wrapper (skips error handling)
+- Hardcoded API URL in code (use `NEXT_PUBLIC_API_URL`)
+- Client Components when Server Component is sufficient
+- Import from `components/ui/` to modify (copy and customize instead)
 
 ## Troubleshooting
 
-### `Error: fetch failed` durante API calls
+### `Error: fetch failed` during API calls
 
-**Causa:** Backend API non running o CORS non configurato
-
-**Fix:**
-
-1. Verifica backend su `http://localhost:3001` con `curl http://localhost:3001/api/health`
-2. Assicurati che backend abbia CORS abilitato per `http://localhost:3000`
-3. Controlla `NEXT_PUBLIC_API_URL` in `.env.local`
-
-### `401 Unauthorized` su route protette
-
-**Causa:** Access token scaduto (15min) e refresh fallito
+**Cause:** Backend API not running or CORS not configured
 
 **Fix:**
 
-1. Verifica refresh token in localStorage (deve essere valido <7 giorni)
-2. Check `refreshAccessToken()` in `lib/auth.ts` con breakpoint
-3. Se persistente, logout e re-login per ottenere nuovi token
+1. Verify backend on `http://localhost:3001` with `curl http://localhost:3001/api/health`
+2. Ensure backend has CORS enabled for `http://localhost:3000`
+3. Check `NEXT_PUBLIC_API_URL` in `.env.local`
 
-### shadcn components non trovati dopo `npx shadcn-ui add`
+### `401 Unauthorized` on protected routes
 
-**Causa:** Path alias `@/` non configurato in `tsconfig.json`
+**Cause:** Access token expired (15min) and refresh failed
 
-**Fix:** Aggiungi in `tsconfig.json`:
+**Fix:**
+
+1. Verify refresh token in localStorage (must be valid <7 days)
+2. Check `refreshAccessToken()` in `lib/auth.ts` with breakpoint
+3. If persistent, logout and re-login to get new tokens
+
+### shadcn components not found after `npx shadcn-ui add`
+
+**Cause:** Path alias `@/` not configured in `tsconfig.json`
+
+**Fix:** Add to `tsconfig.json`:
 
 ```json
 {
@@ -466,11 +466,11 @@ export function useMatches() {
 }
 ```
 
-### Layout shift durante caricamento avatar
+### Layout shift during avatar loading
 
-**Causa:** Immagini senza dimensioni fisse causano reflow
+**Cause:** Images without fixed dimensions cause reflow
 
-**Fix:** Usa `width` e `height` su `<Image>` o fixed size wrapper:
+**Fix:** Use `width` and `height` on `<Image>` or fixed size wrapper:
 
 ```tsx
 <div className="w-12 h-12 rounded-full overflow-hidden">
@@ -478,11 +478,11 @@ export function useMatches() {
 </div>
 ```
 
-### Hydration mismatch con date/timestamp
+### Hydration mismatch with date/timestamp
 
-**Causa:** Server renderizza data in un formato, client in un altro (timezone)
+**Cause:** Server renders date in one format, client in another (timezone)
 
-**Fix:** Usa `suppressHydrationWarning` o formatta date solo client-side:
+**Fix:** Use `suppressHydrationWarning` or format dates client-side only:
 
 ```tsx
 const [mounted, setMounted] = useState(false);
@@ -493,27 +493,27 @@ return <time>{formatDate(match.matched_at)}</time>;
 
 ## Production Checklist
 
-Prima di deploy in produzione:
+Before production deploy:
 
-- [ ] Migra auth da localStorage a httpOnly cookies (vedi `/lib/auth.ts`)
-- [ ] Abilita rate limiting su API calls (usa `swr` o `react-query`)
-- [ ] Configura error tracking (Sentry/Bugsnag)
+- [ ] Migrate auth from localStorage to httpOnly cookies (see `/lib/auth.ts`)
+- [ ] Enable rate limiting on API calls (use `swr` or `react-query`)
+- [ ] Configure error tracking (Sentry/Bugsnag)
 - [ ] Setup analytics (Plausible/GA4)
-- [ ] Ottimizza bundle size con `npm run analyze` (installa `@next/bundle-analyzer`)
-- [ ] Test responsive su mobile (Chrome DevTools device mode)
-- [ ] Audit accessibility con Lighthouse (target: score >90)
-- [ ] Setup environment variables su hosting (Vercel/Netlify)
-- [ ] Test end-to-end con Playwright (login → match → complete flow)
+- [ ] Optimize bundle size with `npm run analyze` (install `@next/bundle-analyzer`)
+- [ ] Test responsive on mobile (Chrome DevTools device mode)
+- [ ] Audit accessibility with Lighthouse (target: score >90)
+- [ ] Setup environment variables on hosting (Vercel/Netlify)
+- [ ] Test end-to-end with Playwright (login → match → complete flow)
 
 ## Future Improvements
 
-Features in roadmap (non implementare senza discussione):
+Features in roadmap (do not implement without discussion):
 
-- **Real-time notifications:** WebSocket per nuovi match senza polling
-- **Dark mode:** Toggle tema con persistenza preferenza
-- **PWA:** Service worker per uso offline
-- **Internazionalizzazione:** i18n per multi-language support
-- **Analytics dashboard:** Stats personali (caffè bevuti, persone incontrate)
+- **Real-time notifications:** WebSocket for new matches without polling
+- **Dark mode:** Theme toggle with preference persistence
+- **PWA:** Service worker for offline use
+- **Internationalization:** i18n for multi-language support
+- **Analytics dashboard:** Personal stats (coffees drunk, people met)
 
 ## Resources
 

@@ -1,20 +1,20 @@
 # Coffee Roulette
 
-## Obiettivo
+## Objective
 
-App interna per abbinare colleghi random per un caffè. Match settimanale automatico + possibilità di match on-demand istantaneo.
+Internal app to randomly match colleagues for a coffee. Automatic weekly match + on-demand instant match capability.
 
-## Struttura Monorepo
+## Monorepo Structure
 
 ```
 coffee-roulette/
-├── api/          # Backend NestJS
-└── web/          # Frontend Next.js
+├── api/          # NestJS Backend
+└── web/          # Next.js Frontend
 ```
 
-Ogni cartella ha il proprio `claude.md` con regole specifiche. Leggi SEMPRE il claude.md della cartella in cui stai lavorando.
+Each folder has its own `claude.md` with specific rules. ALWAYS read the `claude.md` of the folder you are working in.
 
-## Stack Globale
+## Global Stack
 
 | Layer    | Tech                 | Version          |
 | -------- | -------------------- | ---------------- |
@@ -24,23 +24,31 @@ Ogni cartella ha il proprio `claude.md` con regole specifiche. Leggi SEMPRE il c
 | Auth     | JWT                  | Access + Refresh |
 | UI       | Tailwind + shadcn/ui | Latest           |
 
-## Convenzioni Globali
+## Global Conventions
 
-- Package manager: `npm` (mai yarn o pnpm)
-- Naming DB columns: `snake_case`
-- Naming funzioni: `camelCase`
-- Naming classi/componenti: `PascalCase`
-- Lingua codice: Inglese
-- Lingua commenti: Inglese
+- Package manager: `npm` (never yarn or pnpm)
+- DB column naming: `snake_case`
+- Function naming: `camelCase`
+- Class/component naming: `PascalCase`
+- Code language: English
+- Comment language: English
 
-## Boundaries Globali
+## Global Boundaries
 
-- ✅ **Always:** Segui convenzioni naming, scrivi in inglese
-- ⚠️ **Ask first:** Modifiche cross-project (api ↔ web)
-- 🚫 **Never:** Commit secrets, modificare .env files, installare package manager diversi
+- ✅ **Always:** Follow naming conventions, write in English
+- ⚠️ **Ask first:** Cross-project changes (api ↔ web)
+- 🚫 **Never:** Commit secrets, modify .env files, install different package managers
 
-## Comunicazione API ↔ Web
+## API ↔ Web Communication
 
-- Base URL API: `http://localhost:3001/api`
+- API Base URL: `http://localhost:3001/api`
 - Frontend dev: `http://localhost:3000`
-- Tutti gli endpoint API sono prefissati con `/api`
+- All API endpoints are prefixed with `/api`
+
+## Agent Workflow
+
+When the user explicitly asks to "start with the implementation" or "implement the PRP doc", or similar phrases related to starting implementation from requirements:
+
+- You MUST call the `prp-orchestrator` agent.
+- Do not attempt to implement the full feature set yourself without the orchestrator's plan.
+- The `prp-orchestrator` will analyze the requirements (PRD), create a task plan (PRP), and coordinate execution.
