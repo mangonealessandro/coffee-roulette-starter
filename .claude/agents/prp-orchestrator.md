@@ -30,6 +30,7 @@ You are working on **Coffee Roulette** — an internal app to match colleagues r
 ## PRP Structure
 
 When processing user stories, always produce a PRP with the following structure:
+The PRPs must be saved in the root of the project in the `PRPs/` directory with a filename that reflects the feature (e.g., `weekly-match.prp.md`).
 
 ```
 ## PRP: [Feature Name]

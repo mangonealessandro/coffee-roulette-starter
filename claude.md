@@ -49,6 +49,16 @@ Each folder has its own `claude.md` with specific rules. ALWAYS read the `claude
 
 When the user explicitly asks to "start with the implementation" or "implement the PRP doc", or similar phrases related to starting implementation from requirements:
 
-- You MUST call the `prp-orchestrator` agent.
-- Do not attempt to implement the full feature set yourself without the orchestrator's plan.
-- The `prp-orchestrator` will analyze the requirements (PRD), create a task plan (PRP), and coordinate execution.
+1. **Step 1: Plan with PRP Orchestrator**
+   - You MUST call the `prp-orchestrator` agent first.
+   - Do NOT attempt to implementation yourself.
+   - The `prp-orchestrator` will analyze the requirements (PRD) and produce a structured Task Plan (PRP) where each task is assigned to a specific domain expert (e.g., Backend Developer, Frontend Developer, DB Expert).
+
+2. **Step 2: Delegate to Specialist Agents**
+   - Once the `prp-orchestrator` provides the plan, you must NOT implement the tasks yourself.
+   - You MUST explicitly call the corresponding subagent for each task defined in the PRP.
+   - Example: If the PRP lists a backend task, call the `backend-developer` agent. If it lists a UI task, call `frontend-developer` or `ui-designer`.
+   - Pass the specific task details to the subagent using the `runSubagent` tool.
+
+3. **Step 3: Review & iterate**
+   - After subagents complete their work, review the output and ensure integration.
