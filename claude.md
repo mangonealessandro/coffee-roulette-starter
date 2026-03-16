@@ -62,3 +62,7 @@ When the user explicitly asks to "start with the implementation" or "implement t
 
 3. **Step 3: Review & iterate**
    - After subagents complete their work, review the output and ensure integration.
+
+4. **Step 4: Final Report**
+   - Return a comprehensive final report listing all tasks completed from the PRP.
+   - Provide a concise summary of the implementation details, architectural decisions, and next steps.
